@@ -4,8 +4,6 @@
 
 ## Cite
 
-## Cite
-
 The final version of this repository, with updated bibliographical information, is available at [GitHub](https://github.com/INFORMSJoC/2020.0068).
 
 ## Description
