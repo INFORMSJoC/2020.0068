@@ -30,7 +30,7 @@ using namespace std;
     #define NUMERICAL_EMPHASIS_PARAM    IloCplex::Param::Emphasis::Numerical
     #define FEASIBLE_TOLERANCE_PARAM    IloCplex::Param::Simplex::Tolerances::Feasibility
 #else
-    #define TIME_LIMIT_PARAM            TIME_LIMIT_PARAM
+    #define TIME_LIMIT_PARAM            IloCplex::TiLim
     #define MAX_THREADS_PARAM           IloCplex::Threads
     #define NUMERICAL_EMPHASIS_PARAM    IloCplex::NumericalEmphasis
     #define FEASIBLE_TOLERANCE_PARAM    IloCplex::EpRHS

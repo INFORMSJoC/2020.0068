@@ -1,7 +1,9 @@
-/*---------------+---------------------------------------------------------------+--------------+
-                 | Author: Daniel Porumbel 2018       daniel.porumbel@cnam.fr    |
-                 |License: Creative Commons Attribution 3.0 Unported License     |
-                 |         http://creativecommons.org/licenses/by/3.0/           |             
+/*---------------+---------------------------------------------------------------+-------------+
+                 | Author: @ Daniel Porumbel 2021                                |
+                 |License: Any person obtaining a copy of this code is free to   |
+                 |         use it in any manner, subject to two conditions:      |            
+                 |           1) no profit may ever be made from using this code  |
+                 |           2) these 5 lines of text shall be included          |
                  +--------------------------------------------------------------*/
 #include "inout.h"
 #include <cstdlib>

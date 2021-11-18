@@ -1,8 +1,4 @@
-/*---------------+---------------------------------------------------------------+--------------+
-                 | Author: Daniel Porumbel 2018       daniel.porumbel@cnam.fr    |
-                 |License: Creative Commons Attribution 3.0 Unported License     |
-                 |         http://creativecommons.org/licenses/by/3.0/           |             
-                 +--------------------------------------------------------------*/
+/*See accompanying .cpp file for licence info     */
 #ifndef SUBPROB_H
 #define SUBPROB_H
 

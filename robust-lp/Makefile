@@ -1,7 +1,11 @@
-#| Author: Daniel Porumbel 2018       daniel.porumbel@cnam.fr    |
-#|License: Creative Commons Attribution 3.0 Unported License     |
-#|         http://creativecommons.org/licenses/by/3.0/           |             
-#-----------------------------------------------------------------
+#   +---------------------------------------------------------------+
+#   | Author: @ Daniel Porumbel 2021                                |
+#   |License: Any person obtaining a copy of this code is free to   |
+#   |         use it in any manner, subject to two conditions:      |            
+#   |           1) no profit may ever be made from using this code  |
+#   |           2) these 5 lines of text shall be included          |
+#   +--------------------------------------------------------------*/
+
 #Code below searches for cplex installation dir. If you know it, you can erase all
 #lines below (up to first comment) and just put a line as follows.
 #CPLEX=your/cplex/folder/
@@ -17,11 +21,7 @@ ifneq ($(wildcard /opt/ibm/ILOG/),)
     CPLEXVER= $(shell ls /opt/ibm/ILOG/|tail -1)
     CPLEX   = /opt/ibm/ILOG/${CPLEXVER}
 endif 
-#If possible I always take version 12.6
-ifneq ($(wildcard /opt/ibm/ILOG/CPLEX_Studio126/),) 
-    CPLEX   = /opt/ibm/ILOG/CPLEX_Studio126/
-    CPLEXVER="CPLEX_Studio126"
-endif 
+
 CPLEXVERNO_ALLDIGITS=$(shell echo ${CPLEXVER}|sed "s/[^0-9]//g")  #remove non digits
 CPLEXVERNO=$(shell echo ${CPLEXVERNO_ALLDIGITS}|cut -c 1-3)       #take first 3 letters (eg. 126)
 

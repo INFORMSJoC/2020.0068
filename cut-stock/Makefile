@@ -1,7 +1,11 @@
-#   | Author: Daniel Porumbel 2018       daniel.porumbel@cnam.fr    |
-#   |License: Creative Commons Attribution 3.0 Unported License     |
-#   |         http://creativecommons.org/licenses/by/3.0/           |             
-#-----------------------------------------------------------------------------
+#   +---------------------------------------------------------------+
+#   | Author: @ Daniel Porumbel 2021                                |
+#   |License: Any person obtaining a copy of this code is free to   |
+#   |         use it in any manner, subject to two conditions:      |            
+#   |           1) no profit may ever be made from using this code  |
+#   |           2) these 5 lines of text shall be included          |
+#   +--------------------------------------------------------------*/
+
 
 #Code below searches for cplex install dir. If you know it, you can erase all
 #lines below (up to first comment) and just put a line as follows.
@@ -67,9 +71,9 @@ cplexdirexists:
 	if [ -d "$(CPLEX)" ]; then echo -e "Cplex dir $(CPLEX) found. I'll compile ./main if not already compiled.\n"; else echo "\n\nCplex dir not found!!!!! \nPlease set add a line like below on \nCPLEX=/path/to/your/cplex/install/folder/\nat the beginning of this Makefile"; exit 1; fi
 main:main2
 main1:CuttingPlanesEngine.o general.o inout.o frontpareto1.o subprob1.o src/main.cpp 
-	$(CCC) $(CCFLAGS) *.o src/main.cpp -o main $(CCLNFLAGSCPLEX) 
+	$(CCC) $(CCFLAGS) *.o src/main.cpp -o main1 $(CCLNFLAGSCPLEX) 
 main2:CuttingPlanesEngine.o general.o inout.o frontpareto2.o subprob2.o src/main.cpp 
-	$(CCC) $(CCFLAGS) *.o src/main.cpp -o main $(CCLNFLAGSCPLEX) 
+	$(CCC) $(CCFLAGS) *.o src/main.cpp -o main2 $(CCLNFLAGSCPLEX) 
 CuttingPlanesEngine.o : src/CuttingPlanesEngine.cpp src/CuttingPlanesEngine.h
 	$(CCC) -c $(CCFLAGSCPLEX) -Wno-ignored-attributes -DCPLEXVER=${CPLEXVERNO} src/CuttingPlanesEngine.cpp -o CuttingPlanesEngine.o 
 inout.o : src/inout.cpp src/inout.h
@@ -89,6 +93,11 @@ subprob1.o : src/subprob.cpp src/subprob.h src/frontpareto1.h
 subprob2.o : src/subprob.cpp src/subprob.h src/frontpareto2.h 
 	rm -f subprob1.o
 	$(CCC) -DFPARETO2 -c $(CCFLAGS) -Winline src/subprob.cpp -o subprob2.o 
+
+
+#erase below in on line version
+statManager.o : src/statManager.cpp src/statManager.h
+	$(CCC) -c $(CCFLAGS) src/statManager.cpp -o statManager.o 
 
 clean: 
 	rm -f main main1 main2 *.lp *.log *.err *.cout *.o

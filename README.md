@@ -32,13 +32,20 @@ make clean
 
 Figure 1 shows a running example of the robust linear programming problem. The last three lines show how we generated the results from Table 2 (with gamma=10) for the three instances that have a name starting with `ship`.
 
-![Figure 1](results/cutstock.png)
+![Figure 1](results/robust.png)
 
 Figure 2 shows a running example of the multiple-lenght cutting stock software.
 
 ![Figure 2](results/cutstock.png)
 
-You should obtain the same results if you type the same commands.
+You should obtain the same results if you type the same commands, although using
+a different Cplex version may lead to slightly different figures.
+
+## Ongoing Development
+
+This code is being developed on an on-going basis at a private 
+github. Copies for the latest code source may be addressed to
+daniel.porumbel@cnam.fr.
 
 ## Support
 
