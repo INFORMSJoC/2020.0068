@@ -8,66 +8,37 @@ The final version of this repository, with updated bibliographical information, 
 
 ## Description
 
-The goal of this software is to demonstrate the effect of cache optimization.
+The goal of this software is to demonstrate the efficiency of the proposed method (Projective Cutting Planes) on two problems
+
+1. Robust Linear Programming
+2. Cutting Stock with multiple lengths
+    
+The code for the first problem is in the `robust-lp` folder.
+The code for the second one is in the `cut-stock` folder.
 
 ## Building
 
-In Linux, to build the version that multiplies all elements of a vector by a
-constant (used to obtain the results in [Figure 1](results/mult-test.png) in the
-paper), stepping K elements at a time, execute the following commands.
-
+For both problems, you can build the executable by typing:
 ```
-make mult
-```
-
-Alternatively, to build the version that sums the elements of a vector (used
-to obtain the results [Figure 2](results/sum-test.png) in the paper), stepping K
-elements at a time, do the following.
-
-```
-make clean
-make sum
+make 
 ```
 
 Be sure to make clean before building a different version of the code.
-
-## Results
-
-Figure 1 in the paper shows the results of the multiplication test with different
-values of K using `gcc` 7.5 on an Ubuntu Linux box.
-
-![Figure 1](results/mult-test.png)
-
-Figure 2 in the paper shows the results of the sum test with different
-values of K using `gcc` 7.5 on an Ubuntu Linux box.
-
-![Figure 1](results/sum-test.png)
-
-## Replicating
-
-To replicate the results in [Figure 1](results/mult-test), do either
-
 ```
-make mult-test
-```
-or
-```
-python test.py mult
-```
-To replicate the results in [Figure 2](results/sum-test), do either
-
-```
-make sum-test
-```
-or
-```
-python test.py sum
+make clean
 ```
 
-## Ongoing Development
+## Results and replicating
 
-This code is being developed on an on-going basis at the author's
-[Github site](https://github.com/tkralphs/JoCTemplate).
+Figure 1 shows a running example of the robust linear programming problem. The last three lines show how we generated the results from Table 2 (with gamma=10) for the three instances that have a name starting with `ship`.
+
+![Figure 1](results/cutstock.png)
+
+Figure 2 shows a running example of the multiple-lenght cutting stock software.
+
+![Figure 2](results/cutstock.png)
+
+You should obtain the same results if you type the same commands.
 
 ## Support
 
