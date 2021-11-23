@@ -71,15 +71,15 @@ cplexdirexists:
 	if [ -d "$(CPLEX)" ]; then echo -e "Cplex dir $(CPLEX) found. I'll compile ./main if not already compiled.\n"; else echo "\n\nCplex dir not found!!!!! \nPlease set add a line like below on \nCPLEX=/path/to/your/cplex/install/folder/\nat the beginning of this Makefile"; exit 1; fi
 main:main2
 main1:CuttingPlanesEngine.o general.o inout.o frontpareto1.o subprob1.o src/main.cpp 
-	$(CCC) $(CCFLAGS) *.o src/main.cpp -o main1 $(CCLNFLAGSCPLEX) 
+	$(CCC) $(CCFLAGS) *.o src/main.cpp -o main $(CCLNFLAGSCPLEX) 
 main2:CuttingPlanesEngine.o general.o inout.o frontpareto2.o subprob2.o src/main.cpp 
-	$(CCC) $(CCFLAGS) *.o src/main.cpp -o main2 $(CCLNFLAGSCPLEX) 
-CuttingPlanesEngine.o : src/CuttingPlanesEngine.cpp src/CuttingPlanesEngine.h
-	$(CCC) -c $(CCFLAGSCPLEX) -Wno-ignored-attributes -DCPLEXVER=${CPLEXVERNO} src/CuttingPlanesEngine.cpp -o CuttingPlanesEngine.o 
+	$(CCC) $(CCFLAGS) *.o src/main.cpp -o main $(CCLNFLAGSCPLEX) 
+CuttingPlanesEngine.o : ../src_shared/CuttingPlanesEngine.cpp ../src_shared/CuttingPlanesEngine.h
+	$(CCC) -c $(CCFLAGSCPLEX) -Wno-ignored-attributes -DCPLEXVER=${CPLEXVERNO} ../src_shared/CuttingPlanesEngine.cpp -o CuttingPlanesEngine.o 
 inout.o : src/inout.cpp src/inout.h
 	$(CCC) -c $(CCFLAGS) src/inout.cpp -o inout.o 
-general.o : src/general.cpp src/general.h
-	$(CCC) -c $(CCFLAGS) src/general.cpp -o general.o 
+general.o : ../src_shared/general.cpp ../src_shared/general.h
+	$(CCC) -c $(CCFLAGS) ../src_shared/general.cpp -o general.o 
 
 frontpareto1.o : src/frontpareto1.cpp src/frontpareto1.h
 	rm -f frontpareto2.o

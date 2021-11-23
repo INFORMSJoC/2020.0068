@@ -8,8 +8,8 @@
               |           1) no profit may ever be made from using this code  |
               |           2) these 5 lines of text shall be included          |
               +--------------------------------------------------------------*/
-#include "general.h"
-#include "CuttingPlanesEngine.h"
+#include "../../src_shared/general.h"
+#include "../../src_shared/CuttingPlanesEngine.h"
 #include "inout.h"
 #include "subprob.h"
 #include<iostream>

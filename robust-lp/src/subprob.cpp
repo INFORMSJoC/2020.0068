@@ -5,9 +5,7 @@
                  |           1) no profit may ever be made from using this code  |
                  |           2) these 5 lines of text shall be included          |
                  +--------------------------------------------------------------*/
-#include "general.h"
 #include "subprob.h"
-#include "CuttingPlanesEngine.h"
 #include <algorithm>
 #include <cassert>
 #include <climits>
@@ -27,6 +25,10 @@ double*  toCut;
 int      iter = 0;
 extern double tmSort;
 extern int total_multi_cuts;
+
+//functions and variables defined outside
+extern "C"{ double getCPUTime();};
+extern double lowerBound;
 
 /*-----------------------+------------------------------------+--------------------------
                          |VARIOUS GENERAL ROUTINES (eg., sort)|

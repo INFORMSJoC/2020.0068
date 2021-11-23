@@ -1,0 +1,295 @@
+These guidelines could be useful to follow the C++ code from this folder. 
+
+Performance is a priority in optimization: transparent WYSIWYG C++ is needed. One of the advantages
+of C over C++ is that "it gives better control over what happens when your code is executed", see
+2nd point at stackoverflow.com/a/20874130/7857819.  We can keep this advantage by using a rather
+C-like C++ code.  The advantages of a C-like C++ are explained in greater detail in the answer of user
+Solifugus to the C++ criticisms of M. Torvalds at lwn.net/Articles/249460/. I must confess my C++
+code might fall under what M. Torvalds said: "the only way to do good, efficient, and system-level and
+portable C++ ends up to limit yourself to all the things that are basically available in C.".  But
+at least for simple convenience, I do prefer to use *only some* C++ features, e.g., every now and
+then I do use templates. However, it is essential to see what is really going on when you run a piece 
+of code, avoiding implicit or hidden calls (e.g., like infinite inheritance rules or overly-complex 
+templates). I prefer not to eat a pre-packed meal when I have no clue about the things hidden inside.  
+Any external function can bring confusion to your code when you do not exactly know what's inside. 
+Did you know that calling size() on a std::list object can take linear time? Did you know that changing 
+an objective coefficient with setLinearCoef (in C++ with cplex) can take more than constant time? I 
+once experienced a 3-fold increase of the running time only because I forgot to call cplex.end() at the 
+end of a function; the problem was that model.end() was *veeery* slow only because there was no call to 
+cplex.end(). I could not find any hint of this behaviour in the cplex documentation.
+The Eiffel Tower was not built by assembling a number of prefabricated buildings and black boxes.
+
+A. Use syntax "::n" to refer to global variables.
+   In theory, one should not use too many global variables that are difficult to follow, but see
+point D below, i.e., global variables can be better than huge lists of parameters sent to functions
+(or using complex structs to hold many parameters). For instance, if almost all functions use the
+same underlying graph, I do not see why this should not be global. Try to minimize side effects. 
+
+   Use at maximum 90 columns (characters). Enough to see two programs on the same screen.
+
+B.  It is useful to send debug (progress checking) messages to clog, with the advantage that clog
+can be enabled or disabled during run time using the fail bit. But remember "clog<<f()<<endl;" still 
+calls f(). Do use cerr for error messages and send cerr to a different file. You had better use cout 
+only for final output, like tabular .tex files. However, do not print all messages using pure cout
+or pure clog. You could use cout1, cout2, cout3 enabled or disabled individually as below.
+    //#define cout3 if(false) cout
+    //#define cout3 cout
+    //#define cout3 cout<<__LINE__
+There is no runtime overhead because the compiler can constant-fold "if(true)". Whenever you want
+to solve a bug in some piece of code, you can insert progress messages using cout3/clog3 that you 
+can disable as above once the bug is solved.
+
+Put endl after each print. Each printing call should "clean after it".
+
+C. To slow down compilation time, use a file cplex.cpp (and one with .h) and put there all
+routines/objects dealing with cplex and requiring to include cplex. A problem would arise when you
+need to include the file, which would force the including file to import cplex. To avoid this, you
+should hide the data of your cplex class from the .h file. You use the " cheshire cat" approach: 
+you put in your cplex.h only a forward declaration of a class cheesireData. This class is
+implemented in the cplex.cpp file and it contains all variables IloModel, IloEnv, etc.
+
+
+D. Global variables can be very useful. My view is the following, taken from the response of
+Tom West at stackoverflow.com/a/2325845/7857819
+   
+The important thing is to remember the overall goal: clarity
+
+The "no global variables" rule is there because most of the time, global variables make the meaning
+of code less clear.
+
+However, like many rules, people remember the rule, and not what the rule was intended to do.
+
+I've seen programs that seem to double the size of the code by passing an enormous number of
+parameters around simply to avoid the evil of global variables.  In the end, using globals would
+have made the program clearer to those reading it. By mindlessly adhering to the word of the rule,
+the original programmer had failed the intent of the rule.
+
+An example that does not suit my style is:
+
+void moveNodeToColor(int bestNode, int bestColor, Graph & g, int * c, 
+		     int ** nodesByColor, int ** conflicts, 
+		     int * nbcPosition, int ** neighbors, 
+		     int ** tabuStatus,  int totalIterations, int tabuTenure) {
+
+E.  When you have a very long function with many variables, it can be difficult to split 
+it in sub-functions. However, you could replace sub-functions with function-like macros,
+written as at point M. In a macro, you can use the general data of the large function
+(e.g., a dynamic programming table). You give to the macro only the essential parameters
+(or none) which are uses exactly the way they are by the macro. For instance, the
+following call of the function-like macro SEP_ONCE:
+        SEP_ONCE(x,newCut,rHand,cutPlanes);
+gets expanded as follows, using the same variable names x, newCut, rHand, ..
+#define SEP_ONCE(x,newCut,rHand,cutPlanes)                                          \
+    if(clscMethd){                                                                  \
+        upperBound = 0;                                                             \
+        for(int i=0;i<n;i++)                                                        \
+    ...
+Even Article 16 of the C++ Coding Standards by Alexandrescu states "you may want to use
+macros (cautiously) when the alternative is extreme copying and pasting snippets of code
+around." Otherwise, this article cites Stroustrup who said "The first rule about macros
+is: Don't use them unless you have to.". Still, the Linux Kernel coding guide allows them,
+with several "should not", e.g., they should not affect control flow (like when using
+return), they should not be used as l-values (eg, FOO = x) and others, see point 12, the
+Kernel style.  This coding style also said: "macros resembling functions may be named in
+lower case." Incidentally, if you use an in-line function, the compiler might not
+necessarily in-line it, see point R.
+
+In tree search routines, always send parameters by references. Otherwise a whole tree of
+copies can be created.
+
+F. You should NEVER write functions that work ONLY because they are called in a specific order. A
+very BAD example would be:
+    int xCpy;
+    int xChanged(){
+        int changed = 0;
+        if (x!=xCpy)
+            changed = 1;
+        xCpy = x;
+        return changed;
+    }
+
+if you call xChanged() twice after a real change of x, the second time it returns 0 
+
+Another bad example is a routine like, e.g., timeSinceStart() that computes tNow-tStart but
+modifies tStart. It might seem to work, but it is not correct.
+
+G. Using files (see response of Antti Huima at stackoverflow.com/a/691095/7857819
+    * Any external code should be put in separate folder
+    * In abc.cpp, you could put '#include "abc.h"' before other #include (except point below)
+    * Often: there is a single "project-wide header file" like "config.h" or ".h" which is always
+      included first by any .cpp/.C file. Typically this has platform related configuration data,
+      project-wide constants and macros etc.
+    * Every .cpp/.c file includes all headers it needs and does not rely on headers including other
+      related headers
+    * Every .hpp/.h file includes all its dependencies and does not rely on the included headers
+      including other related headers
+    * Headers do not include each others in cycles
+
+These are not necessarily "best practice", but rules which I usually follow also:
+
+    * Project-specific headers are included as #include "..." and before the system-wide headers,
+    * which are included as #include <...> Project-specific headers are included in alphabetical
+    * order as a way to ensure that there is no accidental, hidden requirement on which order they
+    * are included. As every header should include its dependents and the headers should be
+    * protected against multiple inclusion, you should be able to include them in any order you
+    * wish.
+
+H. Keep in headers only public functions meant to be distributed, to be used from outside.
+The private things can be kept inside the cpp file. Do use unnamed namespaces in the cpp
+file. Put there everything that is not public, because the compiler should know that some
+functions are not needed outside. This allows it to perform more aggressive optimizations,
+like in-lining some functions. See the answer of xioxox on 
+stackoverflow.com/questions/357404/why-are-unnamed-namespaces-used-and-what-are-their-benefits
+
+
+I. For a time checking routine of high quality, use getCPUTime, file general.cpp
+due to  David Nadeau. Attention: it adds time of all threads (used by cplex).
+   Better than the following:
+        - clock(...) has the "wrap around" issue described in "man 3 clock": on a 32 bits system, 
+          the value returned by clock is the same every ~70 minutes=2INT_MAX
+        - std::chrono::high_resolution_clock::now() is not a CPU time
+
+J. I propose the following files for all projects
+    - put all globals in main.cpp
+    - generals.h/cpp: routines like getCPUTime(...), toString(number), macro STREXPAND, ...
+    - init.cfg for configuration params is better than a file config.h with defines
+
+K. The Linux kernel coding style could be very useful:
+   K.1) You should write functions in the K-R style, the bracket after the function is on a newline.
+        The bracket after for/while/if is on the same line.
+         void myFunc()
+         {
+             for(...){
+                 ...
+             }
+             if(...){
+                 ....
+                 ....
+             }
+         }
+   K.2) You can use goto, when several goto on a function point to an unique exit point (with delete[]s).
+   K.3) Always use #endif as follows:
+        #ifdef CONFIG_SOMETHING
+        ...
+        #endif /* CONFIG_SOMETHING */
+        Put all macros in the beginning of a file as follows:
+
+             #define FIRSTONE 10000 //if maxClqElems<FIRSTONE
+                                    //       use FOO
+                                    //else
+                                    //       use FOO2
+             #define COMBO 10       //max elems in something
+                                    //It can do many things
+             #define RARUS 100      //Stop if you found RARUS cuts
+             #define EPSILON 1.0e-6
+             #define THREADS 0      //The number of threads to use in cplex solver
+
+   K.4) An example of complex if I like (from xreader project), increasing indent.
+        if (page < (start_page - new_preload_cache_size) ||
+            page > (end_page + new_preload_cache_size)) {
+                dispose_cache_job_info (job_info, pixbuf_cache);
+                return;
+        }
+        An example of a complex for (indented to be on one line):
+
+        for(int cont=states[basew].first(costLocl,profLocl); 
+                                cont; cont=states[basew].next(costLocl,profLocl)) {
+                ....
+                ....
+        }
+
+
+L. I prefer writing comments as below: first is an example of an important section, the
+second is for a smaller section and the last one is for comment of a snippet.
+
+/*---------------------------------------------------------------------------------------+
+|                                                                                        |
+|        Max Weighted Clique Branch and Bound with Bounded Size (max nr of elems)        |
+|                                                                                        |
++---------------------------------------------------------------------------------------*/
+
+/*-----------------------+------------------------------------+--------------------------
+                         |VARIOUS GENERAL ROUTINES (eg., TIME)|
+                         +-----------------------------------*/
+
+/*--------------------------     INPUT/OUTPUT ROUTINES     --------------------------*/
+
+M. You can define function-like macros over several lines instead of inline functions or
+templates like this:
+#define ADD_OBJ(MinOrMax)                                    \
+    IloExpr expr(d.env);                                     \
+    for(int i=0;i<n;i++)                                     \
+        if(abs(coefs[i])>EPSILON)                            \
+            expr+=coefs[i]* d.vars[i];                       \
+    IloObjective obj(d.env, expr, IloObjective::MinOrMax);   \
+    d.model.add(obj);                                        \
+    expr.end();
+
+You had better put such a macro in a *do-while* as asked by the linux kernel style guide.  The
+advantage is that ADD_OBJ(...) will be considered as a unique instruction, for instance in a for
+body without brackets.
+
+N.  You could indicate in the function parameters the modified variables:  these should be the first
+variables and the only ones *without* a "const" keyword; One could also use ``&'' for this, but it
+is not enough: ``&'' could only be used to speed-up the parameter transfer even for non-modifiable
+parameters, see point E. On the other hand, too many const make the code quite messy sometimes.
+
+O. Try to keep memory allocations together (calls to new/malloc), this can speed up, maybe
+by putting tables at close memory locations.
+
+P. For code formatting, you can use below. 
+astyle --style=kr main.cpp
+
+   I follow a style similar to that of Inkscape:
+   https://inkscape.org/en/develop/coding-style/
+
+You could add (maibe in your .astylerc file):
+--indent-col1-comments     #obvious align comment above a for/while/func with the for/while/func
+For better or worse, I do not like the following (widely used) options:
+--add-brackets             #use this if you are too lazy to notice when an unbracketed block gets 2
+                           #lines instead of 1 The linux kernel code does not do it
+--pad-oper, -p             #Insert space around operators, a=2 becomes a = 2
+--unpad-paren              #Remove spaces around parenthesis: if ( (a==2)&&..)-> if((a==2)&&
+--pad-header               #if(foo) becomes if (foo)
+
+As user Skizz remarked on stackoverflow, "A lot of people get very obsessed about where to
+place the spaces, braces, parenthesis, brackets,". You should not do this. Martin Bra
+argued that " that with 'if(' the separation is pretty clear without any added whitespace,
+especially because in a modern editor the 'if' will very likely be colored differently
+from the '(', but '{' will likely have the same color." So the following is good as
+formated by astyle be default:
+
+if(lastNew>last) {
+    i       = lastNew;
+    prev[i] = last;
+}
+
+R. Inlining functions for speed: use compile option below. The idea below can be
+generalized. Many times, seemingly insignificant changes can lead to different
+performances. In-lining can be a reason. Also, the Java just-in-time compiler can do
+better in-lining using run-time statistics.
+
+man gcc=> search -Winline and find:
+
+The compiler uses a variety of heuristics to determine whether or not to inline a
+function. For example, the compiler takes into account the size of the function being
+inlined and the amount of inlining that has already been done in the current function.
+Therefore, seemingly insignificant changes in the source program can cause the warnings
+produced by -Winline to appear or disappear.
+
+It is possible to force in-lining as follows, but the usefulness is debated, see below.
+inline int fun2()  __attribute__((always_inline));
+inline int fun2() {  
+   return 4 + 5;
+}
+	
+I would also recommend never forcing the compiler to inline. But I wouldn't agree that the
+compiler will always do a better job than a human. Sometimes the human will win, and the
+sort of human that will win is also the sort of human who knows when to disregard this
+advice. For the rest of us, trust the compiler :) – ObscureRobot Oct 23 '11 at 21:43
+   	 
+@ObscureRobot: Unfortately there are three types of human: 1) people who know they don't
+know anything about compilers. 2) People who think they know stuff about compilers 3)
+People who know enough about compiler to know they don't know about compilers. Non
+programmers fall into (1) most programmers fall into (2). by Martin York 
+https://stackoverflow.com/questions/7866861/g-doesnt-inline-functions
