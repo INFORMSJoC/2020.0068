@@ -1,4 +1,6 @@
-/*See accompanying .cpp file for licence info     */
+/*-------+-------------------------------------------------------------------------+------------+
+         | See file LICENSE at the root of the git project for licence information |
+         +------------------------------------------------------------------------*/
 #ifndef SUBPROB_H
 #define SUBPROB_H
 

@@ -7,13 +7,9 @@
 |                     "On a 32-bit system where CLOCKS_PER_SEC                           |
 |                      equals 1000000 this function will return                          |
 |                      the same value approximately every 72 minutes"                    |
---------------+---------------------------------------------------------------+---------+
-              | Author: @ Daniel Porumbel 2021                                |
-              |License: Any person obtaining a copy of this code is free to   |
-              |         use it in any manner, subject to two conditions:      |             
-              |           1) no profit may ever be made from using this code  |
-              |           2) these 5 lines of text shall be included          |
-              +--------------------------------------------------------------*/
+---------+-------------------------------------------------------------------------+-----+
+         | See file LICENSE at the root of the git project for licence information |
+         +------------------------------------------------------------------------*/
 
 
 #include <ctime>

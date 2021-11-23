@@ -1,13 +1,9 @@
 /*----------------------------------------------------------------------------------------------+
 |              Solving multiple-length cutting stock using the projection sub-problem           |
 |                     - solve actually ML-CSP with both std and inter methods                   |
---------------+---------------------------------------------------------------+-----------------+
-              | Author: @ Daniel Porumbel 2021                                |
-              |License: Any person obtaining a copy of this code is free to   |
-              |         use it in any manner, subject to two conditions:      |             
-              |           1) no profit may ever be made from using this code  |
-              |           2) these 5 lines of text shall be included          |
-              +--------------------------------------------------------------*/
++--------+-------------------------------------------------------------------------+------------+
+         | See file LICENSE at the root of the git project for licence information |
+         +------------------------------------------------------------------------*/
 #include "../../src_shared/general.h"
 #include "../../src_shared/CuttingPlanesEngine.h"
 #include "inout.h"

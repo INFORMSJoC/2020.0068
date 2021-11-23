@@ -6,8 +6,9 @@
 |                     "On a 32-bit system where CLOCKS_PER_SEC                           |
 |                      equals 1000000 this function will return                          |
 |                      the same value approximately every 72 minutes"                    |
-+----------------------------------------------------------------------------------------+
-see accompanying .cpp file for licence info  */
+---------+-------------------------------------------------------------------------+-----+
+         | See file LICENSE at the root of the git project for licence information |
+         +------------------------------------------------------------------------*/
 
 #ifndef GENERAL_H_INCLUDED
 #define GENERAL_H_INCLUDED
