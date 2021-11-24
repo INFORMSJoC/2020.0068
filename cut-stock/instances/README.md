@@ -2,9 +2,9 @@
 
 This folder contains well-known and well-studied cutting-stock instances 
 publicly available on the internet in various formats. I used a script to
-translate them all into a format very simple to read. So the instances available
-here actually represent derivative works, constructed from instances retrieved
-from the following sources:
+translate them all into a format that is very easy to read. So the instances
+available here actually represent derivative works, constructed from instances
+retrieved from the following sources:
 
 https://www.math.u-bordeaux.fr/~fvanderb/data/randomCSPinstances.tar.Z
 (all vb\*)

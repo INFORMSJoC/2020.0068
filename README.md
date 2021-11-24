@@ -13,14 +13,14 @@ The goal of this software is to demonstrate the efficiency of the proposed metho
 1. Robust Linear Programming
 2. Cutting Stock with multiple lengths
     
-The source code for the first problem is provided the `robust-lp` folder.
+The source code for the first problem is provided in the `robust-lp` folder.
 The source code for the second one is provided in the `cut-stock` folder.
 
 
 
-In fact, a part of the code is actually shared by the two pieces of software. The shared source code files can be found in the ``src_shared'' folder.
+In fact, a part of the code is actually shared by the two pieces of software. The shared source code files can be found in the `src_shared` folder.
 
-Inside both `robust-lp` and `cut-stock` folder, there is ``src`` folder with the source code 
+Inside both the `robust-lp` and the `cut-stock` folder, there is `src` folder with the source code 
 file and a folder `instances` folder containing the benchmark data set.
 
 The file `CODE_GUIDELINES` from the `src_shared` folder describe the practices and standards used to write the whole software.
@@ -41,8 +41,8 @@ make clean
 ## Results and replicating
 
 For both programs, it is enough to type `./main` to see the command line
-options. Two examples are provided below, first for robust optimization and then for
-cutting stock:
+options. Two command line examples are provided below, first for robust 
+optimization and then for cutting stock:
 
 1. The command `./main prj instances/maros.txt -m -tabularLatexOnly` will execute Projective Cutting Planes (because of argument `prj`) and output
 only the tabular data that can be easily modifed and compiled using `pdflatex` to obtain a pdf file.  This is how the results from Table 2 have been generated.
