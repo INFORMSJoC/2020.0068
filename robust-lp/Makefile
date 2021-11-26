@@ -79,10 +79,10 @@ subprob.o : src/subprob.cpp src/subprob.h
 	$(CCC) -c $(CCFLAGS) src/subprob.cpp -o subprob.o 
 inout.o : src/inout.cpp src/inout.h
 	$(CCC) -c $(CCFLAGS) src/inout.cpp -o inout.o 
-general.o : src/general.cpp src/general.h
-	$(CCC) -c $(CCFLAGS) src/general.cpp -o general.o 
-CuttingPlanesEngine.o : src/CuttingPlanesEngine.cpp src/CuttingPlanesEngine.h
-	$(CCC) -c $(CCFLAGSCPLEX) -DCPLEXVER=${CPLEXVERNO} src/CuttingPlanesEngine.cpp -o CuttingPlanesEngine.o 
+general.o : ../src_shared/general.cpp ../src_shared/general.h
+	$(CCC) -c $(CCFLAGS) ../src_shared/general.cpp -o general.o 
+CuttingPlanesEngine.o : ../src_shared/CuttingPlanesEngine.cpp ../src_shared/CuttingPlanesEngine.h
+	$(CCC) -c $(CCFLAGSCPLEX) -DCPLEXVER=${CPLEXVERNO} ../src_shared/CuttingPlanesEngine.cpp -o CuttingPlanesEngine.o 
 
 clean: cleanobj
 	rm -f main *.lp *.log *.err *.cout

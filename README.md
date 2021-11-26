@@ -6,15 +6,25 @@
 
 The final version of this repository, with updated bibliographical information, is available at [GitHub](https://github.com/INFORMSJoC/2020.0068).
 
-## Description
+## Description and folder structure
 
 The goal of this software is to demonstrate the efficiency of the proposed method (Projective Cutting Planes) on two problems
 
 1. Robust Linear Programming
 2. Cutting Stock with multiple lengths
     
-The code for the first problem is in the `robust-lp` folder.
-The code for the second one is in the `cut-stock` folder.
+The source code for the first problem is provided in the `robust-lp` folder.
+The source code for the second one is provided in the `cut-stock` folder.
+
+
+
+In fact, a part of the code is actually shared by the two pieces of software. The shared source code files can be found in the `src_shared` folder.
+
+Inside both the `robust-lp` and the `cut-stock` folder, there is `src` folder with the source code 
+file and a folder `instances` folder containing the benchmark data set.
+
+The file `CODE_GUIDELINES` from the `src_shared` folder describe the practices and standards used to write the whole software.
+Such information may help one more easily understand the source code.
 
 ## Building
 
@@ -30,24 +40,21 @@ make clean
 
 ## Results and replicating
 
-Figure 1 shows a running example of the robust linear programming problem. The last three lines show how we generated the results from Table 2 (with gamma=10) for the three instances that have a name starting with `ship`.
+For both programs, it is enough to type `./main` to see the command line
+options. Two command line examples are provided below, first for robust 
+optimization and then for cutting stock:
 
-![Figure 1](results/robust.png)
+1. The command `./main prj instances/maros.txt -m -tabularLatexOnly` will execute Projective Cutting Planes (because of argument `prj`) and output
+only the tabular data that can be easily modifed and compiled using `pdflatex` to obtain a pdf file.  This is how the results from Table 2 have been generated.
 
-Figure 2 shows a running example of the multiple-lenght cutting stock software.
+``` Ratio (robustobj-nominalObj)/nominalObj:  12.11 LOWGAP_ITERS       52 LOWGAP_TIME    0.2167 ITERS   53 TIME   0.8324 MULTICUTS 10015```
 
-![Figure 2](results/cutstock.png)
 
-You should obtain the same results if you type the same commands, although using
-a different Cplex version may lead to slightly different figures.
+2. The command `./main instances/m1M100n100.1bp` will simply execute Projective Cutting Planese on the very
+first instance from the `wascher.txt` benchmark set. The very last printed line provides the tabular data
+that can be integrated into a latex table to generate a pdf document.
 
 ## Ongoing Development
 
-This code is being developed on an on-going basis at a private 
-github. Copies for the latest code source may be addressed to
-daniel.porumbel@cnam.fr.
+This code is being developed on an on-going basis using a private github. Requests for copies of the latest code source may be addressed to daniel.porumbel@cnam.fr.
 
-## Support
-
-For support in using this software, submit an
-[issue](https://github.com/tkralphs/JoCTemplate/issues/new).

@@ -1,7 +1,8 @@
 /*----------------------------------------------------------------------------------------------+
 |               Solving random base projection and separation sub-problems                      |
-------------------------------------------------------------------------------------------------+
-see accompanying .cpp info for licence information.*/
++--------+-------------------------------------------------------------------------+------------+
+         | See file LICENSE at the root of the git project for licence information |
+         +------------------------------------------------------------------------*/
 
 #ifndef SUBPROB_H_INCLUDED
 #define SUBPROB_H_INCLUDED

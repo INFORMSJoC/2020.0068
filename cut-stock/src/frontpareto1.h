@@ -1,4 +1,5 @@
-/*  See accompanying .h for licence and documentation   */
+/*See file LICENSE at the root of the git project for licence information*/
+
 
 /*----------------------------------------------------------------------------------------------+
 |                                 PARETO FRONT DATA STRUCT                                      |

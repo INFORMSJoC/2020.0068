@@ -1,13 +1,10 @@
-/*---------------+---------------------------------------------------------------+-------------+
-                 | Author: @ Daniel Porumbel 2021                                |
-                 |License: Any person obtaining a copy of this code is free to   |
-                 |         use it in any manner, subject to two conditions:      |            
-                 |           1) no profit may ever be made from using this code  |
-                 |           2) these 5 lines of text shall be included          |
-                 +--------------------------------------------------------------*/
+/*-------+-------------------------------------------------------------------------+------------+
+         | See file LICENSE at the root of the git project for licence information |
+         +------------------------------------------------------------------------*/
+
 #include "inout.h"
 #include "subprob.h"
-#include "CuttingPlanesEngine.h"
+#include "../../src_shared/CuttingPlanesEngine.h"
 #include <iostream>
 #include <iomanip>
 #include <cstdlib>
@@ -17,18 +14,31 @@
 #include <fstream>
 using namespace std;
 
+
+/*----------------------   Project-wide Global Variables     ---------------------*/
 int      n;                       //number of variables
 int      m;                       //number of initial rows
-int      gamma=10;
-double*  obj;
-double** rows;                    //rows[...][n] = rHand, rows[...][n+1]=EQUALITY,LESS_THAN_EQ
-double*  lb;
+int      gamma=10;                //uncertainty budget
+double*  obj;                     //objective function coefficients
+double** rows;                    //rows with n+2 positions: the coefficients +
+                                  //rows[...][n] = rHand, rows[...][n+1]=EQUALITY,LESS_THAN_EQ
+                                  //where EQUALITY and LESS_THAN_EQ are defined in subprob.h
+                                  //They indicate if we have an equality or <= cut
+
+double*  lb;                      //lower and upper bounds for each variabl
 double*  ub;
-double*  xbase;
-double*  d;                       //used to solve proj_subprob(xbase->d)
-bool     runStd;
-int      seed;
+double*  xbase;                   //xbase the x from the paper,
+double*  d;                       //used to solve proj_subprob(x->d)
+
+int      seed;                    //random seed
 int      iters;                   //iters and tmCPlanes will be filled by cutPlanes.runCutPlanes(...)
+bool     runStd;                  //true if we run the standard algorithm, false otherwise
+bool     multi_cuts_limited=false;//Put a limit on the number of multiple cuts
+                                  //prj: return only cuts that decrease tStar
+                                  //std: maximum 10 cuts per iter
+bool     latex_print_only = false;
+
+/*------------------- Iteration count and time information  ---------------------*/
 double   tmCPlanes;
 double   tmSort     = 0;
 int      iterLowGap = -1;         //iteration when ub<=bstLowerBound*1.2
@@ -37,9 +47,8 @@ double   nominalObj, finalObj;
 char*    startsol = NULL;
 int      total_multi_cuts = 0;
 bool     multi_cuts_per_round;
-bool     multi_cuts_limited=false;//Put a limit on the number of multiple cuts
-                                  //prj: return only cuts that decrease tStar
-                                  //std: maximum 10 cuts per iter
+
+/*-------------------        Sub-problem solving routines  ---------------------*/
 
 //return rHand - newRow^T x. The cut that will be added is: newRow^T x <= rHand
 double sub_problem_single_cut (const int nrVars, double*x, double * newRow,double&newRHand)
@@ -118,6 +127,10 @@ void checkAllParams(int& argc, char** argv)
             clog<<"Input start sol: "<<startsol<<endl;
             argc--;
         }
+        if(argv[argc-1][1]=='t') {
+            latex_print_only = true;
+            argc--;
+        }
         if(argc_start==argc){
             cerr<<"Failed parsing option '"<<argv[argc-1]
                 <<"'. Run ./main to see all options."<<endl;
@@ -129,10 +142,11 @@ void checkAllParams(int& argc, char** argv)
     if(argc!=3){
         cerr<<"\nUsage: ./main method(std, prj or wEXTENSION) instance "
               "[-m[ultiple_cuts_per_round]] [-l[limited multi cuts] "
-              "[-v[erbose]] [-gGAMMA, eg -g50] [-r[nd]] [-iINPUTSTARTSOL] \n"
+              "[-v[erbose]] [-gGAMMA, eg -g50] [-r[nd]] [-iINPUTSTARTSOL] [-t[abularLatexOnly]]\n"
               "           std=standard meth, prj=projective meth, "
               "w=write feasib sol to instance.EXTENSION\n"
               "           Use -v to enable printing log messages\n"
+              "           Use -t to print only latex data\n"
               "           Use -r[nd] to randomize algo \n"
               "           Best methods/switches: -m for prj and -l for std\n";
         exit(EXIT_FAILURE);
@@ -147,15 +161,12 @@ void buildFeasibSol(char* outfile)
         for(int j=0;j<(::n)+2;j++)
             rrows[i][j] = rows[i][j];
     }
-    //srand(9);
     for(int i=0;i<(::m);i++)
          if(rows[i][n+1]==LESS_THAN_EQ){
              for(int j=0;j<n;j++)
-                //if(rand()%10>3)
                     rrows[i][j]+=0.02*absVal(rrows[i][j]);
              rrows[i][n]-=0.00150;
          }
-    //double tt=2;
     CuttingPlanesEngine cutPlanes(::n,sub_problem_single_cut); 
     for(int i=0; i < (::n); i++){
         assert(lb[i]<=ub[i]);
@@ -166,7 +177,6 @@ void buildFeasibSol(char* outfile)
         delete[] rrows[i];
     }
     delete[] rrows;
-    //for(int i=0;i<n;i++) obj[i]=0;
     //for(int i=0;i<n;i++) obj[i]=rand()%20;
     cutPlanes.setObjCoefsMinimize(obj);
 
@@ -258,10 +268,12 @@ int main(int argc, char** argv)
     //int cuts_start = cutPlanes.getNbCuts();
     if(cutPlanes.runCutPlanes(100000, 150000, iters, tmCPlanes)==EXIT_FAILURE){
         finalObj = cutPlanes.getObjVal();
-        cout<<"\nFinal obj val (with timeout or error)="<<setprecision(11)
-            <<finalObj <<" obtained after "<<iters<<" iters of CutPlanes and "
-            <<tmCPlanes<<" secs.\n";
-        cout<<"Infeasible\n";
+        if(!latex_print_only){
+            cout<<"\nFinal obj val (with timeout or error)="<<setprecision(11)
+                <<finalObj <<" obtained after "<<iters<<" iters of CutPlanes and "
+                <<tmCPlanes<<" secs.\n";
+            cout<<"Infeasible\n";
+        }
         return EXIT_FAILURE;
     }
 
@@ -274,11 +286,16 @@ int main(int argc, char** argv)
     //clog<<endl;
     
     finalObj = cutPlanes.getObjVal();
-    cout<<"\nFinal obj val ="<<setprecision(12)<<finalObj<<" obtained after "
-        <<iters <<" iters of CutPlanes and " <<tmCPlanes<<" secs.\n";
-    cout<<"Tabular data below for latex inclusion:\nRatio:"<<setprecision(4)<<setw(7)<<(finalObj-nominalObj)/absVal(nominalObj)*100;
+    if(!latex_print_only){
+        cout<<"\nFinal obj val ="<<setprecision(12)<<finalObj<<" obtained after "
+            <<iters <<" iters of CutPlanes and " <<tmCPlanes<<" secs.\n";
+        cout<<"Tabular data below for latex inclusion:\n";
+    }
+
+    cout<<"Ratio (robustobj-nominalObj)/nominalObj:";
+    cout<<setprecision(4)<<setw(7)<<(finalObj-nominalObj)/absVal(nominalObj)*100;
     if(iterLowGap!=-1)
-        cout<<" "<<setw(9)<<iterLowGap<<" "<<setw(9)<<tmLowGap;
+        cout<<" LOWGAP_ITERS"<<setw(9)<<iterLowGap<<" LOWGAP_TIME "<<setw(9)<<tmLowGap;
     cout<<" ITERS"<<setw(5)<<iters<<" TIME"<<setw(9)<<tmCPlanes;
     //if(iterLowGap!=-1)
     //    cout<<"P"<<setw(6)<<setprecision(3)<<100.0*tmLowGap/tmCPlanes;

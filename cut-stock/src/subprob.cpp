@@ -1,12 +1,8 @@
 /*--------------------------------------------------------------------------------------+
 | Functions to solve random base intersection (projection) and separation sub-problems  |
---------------+---------------------------------------------------------------+---------+
-              | Author: @ Daniel Porumbel 2021                                |
-              |License: Any person obtaining a copy of this code is free to   |
-              |         use it in any manner, subject to two conditions:      |             
-              |           1) no profit may ever be made from using this code  |
-              |           2) these 5 lines of text shall be included          |
-              +--------------------------------------------------------------*/
++--------+-------------------------------------------------------------------------+------------+
+         | See file LICENSE at the root of the git project for licence information |
+         +------------------------------------------------------------------------*/
 #include "subprob.h"
 
 //Below one can choose between two frontpareto implementations.

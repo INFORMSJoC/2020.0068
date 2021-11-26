@@ -1,4 +1,5 @@
-/* see accompanying .cpp file for licence info  */
+/*See file LICENSE at the root of the git project for licence information*/
+
 #ifndef INOUT_H
 #define INOUT_H
 extern int n;       //number of variables

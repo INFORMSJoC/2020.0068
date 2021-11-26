@@ -1,7 +1,8 @@
 /*----------------------------------------------------------------------------------------------+
 |               Input and output functions, they can read the n^th instance from file           |
-------------------------------------------------------------------------------------------------+
-see accompanying .cpp file for licence information*/
++--------+-------------------------------------------------------------------------+------------+
+         | See file LICENSE at the root of the git project for licence information |
+         +------------------------------------------------------------------------*/
 
 #ifndef INOUT_H_INCLUDED
 #define INOUT_H_INCLUDED

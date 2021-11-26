@@ -3,13 +3,9 @@
 |                   - using the cheshire cat technique, no need to include cplex                | 
 |                     .h headers in all files that include CuttingPlanesEngine.h,               |
 |                     significantly speeding-up compilation                                     |    
------------------+---------------------------------------------------------------+--------------+
-                 | Author: @ Daniel Porumbel 2021                                |
-                 |License: Any person obtaining a copy of this code is free to   |
-                 |         use it in any manner, subject to two conditions:      |
-                 |           1) no profit may ever be made from using this code  |
-                 |           2) these 5 lines of text shall be included          |
-                 +--------------------------------------------------------------*/
+---------+-------------------------------------------------------------------------+------------+
+         | See file LICENSE at the root of the git project for licence information |
+         +------------------------------------------------------------------------*/
 
 #include "CuttingPlanesEngine.h"
 #include "general.h"                //only useful for getCPUTime()

@@ -3,8 +3,9 @@
 |                   - using the cheshire cat technique, no need to include cplex                | 
 |                     .h headers in all files that include CuttingPlanesEngine.h,               |
 |                     significantly speeding-up compilation                                     |    
-------------------------------------------------------------------------------------------------+
-See accompanying .cpp file for licence info     */
+---------+-------------------------------------------------------------------------+------------+
+         | See file LICENSE at the root of the git project for licence information |
+         +------------------------------------------------------------------------*/
 
 #ifndef CUTPLANESENGINE_H_INCLUDED
 #define CUTPLANESENGINE_H_INCLUDED

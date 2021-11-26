@@ -1,13 +1,7 @@
-/*---------------+---------------------------------------------------------------+-------------+
-                 | Author: @ Daniel Porumbel 2021                                |
-                 |License: Any person obtaining a copy of this code is free to   |
-                 |         use it in any manner, subject to two conditions:      |            
-                 |           1) no profit may ever be made from using this code  |
-                 |           2) these 5 lines of text shall be included          |
-                 +--------------------------------------------------------------*/
-#include "general.h"
+/*-------+-------------------------------------------------------------------------+------------+
+         | See file LICENSE at the root of the git project for licence information |
+         +------------------------------------------------------------------------*/
 #include "subprob.h"
-#include "CuttingPlanesEngine.h"
 #include <algorithm>
 #include <cassert>
 #include <climits>
@@ -27,6 +21,10 @@ double*  toCut;
 int      iter = 0;
 extern double tmSort;
 extern int total_multi_cuts;
+
+//functions and variables defined outside
+extern "C"{ double getCPUTime();};
+extern double lowerBound;
 
 /*-----------------------+------------------------------------+--------------------------
                          |VARIOUS GENERAL ROUTINES (eg., sort)|
