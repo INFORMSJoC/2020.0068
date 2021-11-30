@@ -4,8 +4,6 @@
 
 ## Cite
 
-## Cite
-
 To cite this material, please cite this repository, using the following DOI.
 
 [![DOI](https://zenodo.org/badge/424937237.svg)](https://zenodo.org/badge/latestdoi/424937237)
@@ -22,7 +20,7 @@ Below is the BibTex for citing this version of the code.
   url =           {https://github.com/INFORMSJoC/2020.0068}
 }  
 ```
--
+
 ## Description and folder structure
 
 The goal of this software is to demonstrate the efficiency of the proposed method (Projective Cutting Planes) on two problems
