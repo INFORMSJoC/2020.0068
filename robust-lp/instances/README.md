@@ -1,6 +1,9 @@
 # Data and instances for replication
 
-This folder contains the lp instances from the well-known NetLib library.
+This folder contains the lp instances from the well-known NetLib library.  I
+used a script to translate them all into a format that is very easy to read. So
+the instances available here actually represent derivative works, constructed
+from instances retrieved from the following source:
 
 www.netlib.org/lp/data/index.html
 

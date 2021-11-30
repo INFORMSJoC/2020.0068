@@ -15,6 +15,6 @@ https://or.dei.unibo.it/sites/or.dei.unibo.it/files/instances/W%C3%A4scher.rar
 https://www2.wiwi.uni-jena.de/Entscheidung/binpp/bin3dat.htm
 (zhard-sch)
 
-private communication with François Clautiaux
+private communication with François Clautiaux (used with permission)
 (m01, m20, m35)
 
