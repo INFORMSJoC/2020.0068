@@ -4,8 +4,25 @@
 
 ## Cite
 
-The final version of this repository, with updated bibliographical information, is available at [GitHub](https://github.com/INFORMSJoC/2020.0068).
+## Cite
 
+To cite this material, please cite this repository, using the following DOI.
+
+[![DOI](https://zenodo.org/badge/424937237.svg)](https://zenodo.org/badge/latestdoi/424937237)
+
+Below is the BibTex for citing this version of the code.
+
+```
+@article{PCP4RLPaCSP2021,
+  author =        {D. Porumbel},
+  publisher =     {INFORMS Journal on Computing},
+  title =         {Projective Cutting-Planes for robust linear programming and Cutting-Stock problems},
+  year =          {2021},
+  doi =           {10.5281/zenodo.5745335},
+  url =           {https://github.com/INFORMSJoC/2020.0068}
+}  
+```
+-
 ## Description and folder structure
 
 The goal of this software is to demonstrate the efficiency of the proposed method (Projective Cutting Planes) on two problems
@@ -15,8 +32,6 @@ The goal of this software is to demonstrate the efficiency of the proposed metho
     
 The source code for the first problem is provided in the `robust-lp` folder.
 The source code for the second one is provided in the `cut-stock` folder.
-
-
 
 In fact, a part of the code is actually shared by the two pieces of software. The shared source code files can be found in the `src_shared` folder.
 
