@@ -1,4 +1,4 @@
-[![INFORMS Journal on Computing Logo](https://INFORMSJoC.github.io/logos/INFORMS_Journal_on_Computing_Header.jpg)](https://pubsonline.informs.org/journal/ijoc)
+[![INFORMS Journal on Computing Logo](https://INFORMSJoC.github.io/logos/INFORMS_Journal_on_Computing_Header.jpg)]([https://pubsonline.informs.org/journal/ijoc](https://doi.org/10.1287/ijoc.2022.1160)
 
 # Projective Cutting-Planes for robust linear programming and Cutting-Stock problems
 
