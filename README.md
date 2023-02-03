@@ -2,6 +2,8 @@
 
 # [Projective Cutting-Planes for Robust Linear Programming and Cutting-Stock Problems](https://doi.org/10.1287/ijoc.2022.1160)
 
+This repository is associated with the paper found at this link (https://pubsonline.informs.org/doi/10.1287/ijoc.2022.1160).
+
 ## Cite
 
 To cite this material, please cite this repository, using the following DOI.
