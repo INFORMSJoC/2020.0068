@@ -17,7 +17,7 @@ Below is the BibTex for citing this version of the code.
   title =         {Projective Cutting-Planes for robust linear programming and Cutting-Stock Problems},
   year =          {2021},
   doi =           {10.5281/zenodo.5745335},
-  url =           {https://github.com/INFORMSJoC/2020.0068}
+  url =           {[https://github.com/INFORMSJoC/2020.0068](https://pubsonline.informs.org/doi/10.1287/ijoc.2022.1160)}
 }  
 ```
 
