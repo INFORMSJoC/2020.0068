@@ -6,9 +6,7 @@ This repository is associated with the paper found at this link (https://pubsonl
 
 ## Cite
 
-To cite this material, please cite this repository, using the following DOI.
-
-[![DOI](https://zenodo.org/badge/424937237.svg)](https://zenodo.org/badge/latestdoi/424937237)
+To cite this material, please cite this repository, using the following DOI: [https://doi.org/10.1287/ijoc.2022.1160.cd](https://doi.org/10.1287/ijoc.2022.1160.cd)
 
 Below is the BibTex for citing this version of the code.
 
@@ -18,7 +16,7 @@ Below is the BibTex for citing this version of the code.
   publisher =     {INFORMS Journal on Computing},
   title =         {Projective Cutting-Planes for robust linear programming and Cutting-Stock Problems},
   year =          {2021},
-  doi =           {10.5281/zenodo.5745335},
+  doi =           {10.1287/ijoc.2022.1160.cd},
   url =           {[https://github.com/INFORMSJoC/2020.0068]}
 }  
 ```
